@@ -1,6 +1,8 @@
 import pygame
 import sys
 import settings
+import time
+import particles
 
 
 class ParticleExplosion:
@@ -15,6 +17,14 @@ class ParticleExplosion:
         pygame.display.set_caption("Particle Explosion")
         self.screen_rect = self.screen.get_rect()
 
+        # initialize the particles
+        self.particle_group = particles.sprite.Group()
+        self.create_particles()
+
+        # initialize run speed
+        self.FPS = 60
+        self.clock = pygame.time.Clock()
+
     def on_event(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -25,6 +35,9 @@ class ParticleExplosion:
 
     def on_render(self):
         self.screen.fill(self.bg_color)
+        # draw particles
+        for particle in self.particle_group.sprites():
+            particle.draw_particle()
         pygame.display.flip()
 
     def on_cleanup(self):
@@ -33,10 +46,17 @@ class ParticleExplosion:
     def on_execute(self):
 
         while True:
+            # self.clock.tick(self.FPS)
             self.on_event()
             self.on_loop()
             self.on_render()
         self.on_cleanup()
+
+# --------------------------------------------------------------
+    def create_particles(self):
+        while len(self.particle_group) < self.settings.n_particles:
+            particle = particles.Particles(self)
+            self.particle_group.add(particle)
 
 
 if __name__ == "__main__":
