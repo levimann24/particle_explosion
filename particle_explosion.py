@@ -38,6 +38,9 @@ class ParticleExplosion:
 
     def on_loop(self):
         self.color_change()
+        for particle in self.particle_group.sprites():
+            particle.move_particle()
+        self.delete_particles()
 
     def on_render(self):
         self.screen.fill(self.bg_color)
@@ -64,11 +67,21 @@ class ParticleExplosion:
             particle = particles.Particles(self)
             self.particle_group.add(particle)
 
+    def delete_particles(self):
+        for particle in self.particle_group.sprites():
+            check = particle.check_delete()
+            if check:
+                self.particle_group.remove(particle)
+        if len(self.particle_group) < self.settings.n_particles:
+            self.create_particles()
+
+
 # ----------------------------------------------------------------
+
     def color_change(self):
-        self.p_red = abs(math.sin(time.time()*.5))*255
+        self.p_red = abs(math.sin(time.time()*.1))*255
         self.p_green = abs(math.sin(time.time()*.3))*255
-        self.p_blue = abs(math.sin(time.time()*.1))*255
+        self.p_blue = abs(math.sin(time.time()*.5))*255
         for particle in self.particle_group.sprites():
             particle.change_color(self.p_red, self.p_green, self.p_blue)
 
