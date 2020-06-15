@@ -1,3 +1,7 @@
+import random
+import math
+
+
 class Settings:
     def __init__(self):
 
@@ -7,8 +11,8 @@ class Settings:
         self.bg_color = (255, 255, 255)
 
         # define some particle parameters
-        self.p_w = 1
-        self.p_h = 1
+        self.p_w = 20
+        self.p_h = 20
         self.p_speed = 1
         self.p_acc = 1
         self.n_particles = 1

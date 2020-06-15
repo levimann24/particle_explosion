@@ -25,3 +25,6 @@ class Particles(sprite.Sprite):
 
     def move_particle(self):
         pass
+
+    def change_color(self, r, g, b):
+        self.color = (r, g, b)
